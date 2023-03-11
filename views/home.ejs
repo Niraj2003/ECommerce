@@ -14,6 +14,8 @@
 </div>
 
 <!-- Products -->
+<% allProducts.forEach((prod)=> { %>
+
 <div class="container">
   <div class="row">
     <div class="col-lg-4 col-md-6 mb-4">
@@ -21,48 +23,19 @@
         <a href="#"><img class="card-img-top" src="https://via.placeholder.com/350x150" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="#">Product 1</a>
+            <a href="#"><%= prod.productName %></a>
           </h4>
-          <h5>$24.99</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi repellendus, eius expedita vel iure, ducimus ad labore impedit illum aliquam ea hic atque quisquam veritatis natus temporibus sunt laboriosam laudantium.</p>
+          <h5> &#x20b9; <%= prod.price %></h5>
+          <p class="card-text"> <%= prod.productDes%> </p>
         </div>
         <div class="card-footer">
           <button class="btn btn-primary">Add to Cart</button>
         </div>
       </div>
-    </div>
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://via.placeholder.com/350x150" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Product 2</a>
-          </h4>
-          <h5>$14.99</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at sapien sed dolor sodales pellentesque. In hac habitasse platea dictumst.</p>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://via.placeholder.com/350x150" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Product 2</a>
-          </h4>
-          <h5>$14.99</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at sapien sed dolor sodales pellentesque. In hac habitasse platea dictumst.</p>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary">Add to Cart</button>
-        </div>
-      </div>
-    </div>
+    </div>    
+  </div>
 </div>
-</div>
+<% }) %>
 
 <%- include('partials/footer.ejs') -%>
 

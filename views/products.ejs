@@ -11,19 +11,22 @@
 <%- include('partials/header.ejs') -%>
 
 <!-- Product Details -->
+<% allProducts.forEach((prod)=> { %>
 <div class="container my-5">
   <div class="row">
     <div class="col-lg-6">
       <img class="img-fluid" src="https://via.placeholder.com/350x150" alt="">
     </div>
     <div class="col-lg-6">
-      <h1>Product 1</h1>
-      <h2>$24.99</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at sapien sed dolor sodales pellentesque. In hac habitasse platea dictumst.</p>
+
+      <h1> <%= prod.productName %></h1>
+      <h2> &#x20b9; <%= prod.price %></h2>
+      <p><%= prod.productDes %></p>
       <button class="btn btn-primary">Add to Cart</button>
     </div>
   </div>
 </div>
+<% }) %>
 
 <!-- Footer -->
 <footer class="bg-light py-3">
