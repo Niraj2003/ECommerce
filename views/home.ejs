@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 <%- include('partials/header.ejs') -%>
@@ -7,35 +9,75 @@
 <!-- Banner -->
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Welcome to E-commerce Website</h1>
-    <p class="lead">Shop for all your favorite products here.</p>
-    <a href="/products" class="btn btn-primary btn-lg">Shop Now</a>
+    <h1 class="display-4 text-center">Welcome to E-commerce Website</h1>
+    <!-- <p class="lead">Shop for all your favorite products here.</p> -->
+    <!-- <a href="/products" class="btn btn-primary btn-lg">Shop Now</a> -->
   </div>
 </div>
 
 <!-- Products -->
-<% allProducts.forEach((prod)=> { %>
-
-<div class="container">
+<!-- <div class="container-fluid">
   <div class="row">
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://via.placeholder.com/350x150" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#"><%= prod.productName %></a>
-          </h4>
-          <h5> &#x20b9; <%= prod.price %></h5>
-          <p class="card-text"> <%= prod.productDes%> </p>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary">Add to Cart</button>
+    <div class="col-md-4">
+      <h2>Men</h2>
+      <p>Explore our collection of Men's clothing and accessories.</p>
+      <a href="#" class="btn btn-primary">Shop Now</a>
+    </div>
+    <div class="col-md-4">
+      <h2>Women</h2>
+      <p>Discover our range of Women's clothing and accessories.</p>
+      <a href="#" class="btn btn-primary">Shop Now</a>
+    </div>
+    <div class="col-md-4">
+      <h2>Kids</h2>
+      <p>Shop our collection of Kids' clothing and accessories.</p>
+      <a href="#" class="btn btn-primary">Shop Now</a>
+    </div>
+  </div>
+</div> -->
+
+<section id="men" class="py-2">
+  <div class="container">
+    <!-- <h2 class="mb-4">Our's Collection</h2> -->
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/350x350.png?text=Men" class="card-img-top" alt="Product 1">
+          <div class="card-body text-center">
+            <h5 class="card-title">Men</h5>
+            <a href="#" class="btn btn-primary">Shop Now</a>
+          </div>
         </div>
       </div>
-    </div>    
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/350x350.png?text=Women" class="card-img-top" alt="Product 2">
+          <div class="card-body text-center">
+            <h5 class="card-title">Women</h5>
+            <a href="#" class="btn btn-primary">Shop Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/350x350.png?text=Kids" class="card-img-top" alt="Product 3">
+          <div class="card-body text-center">
+            <h5 class="card-title">Kids </h5>
+            <a href="#" class="btn btn-primary">Shop Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<% }) %>
+</section>
 
-<%- include('partials/footer.ejs') -%>
 
+<footer class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <p>&copy; 2023 My E-commerce Website. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>

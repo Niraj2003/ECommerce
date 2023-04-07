@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("public"));
+app.use(express.static("views"));
 
 mongoose.connect("mongodb+srv://ecommerce:e$1234@cluster0.wt6n0rb.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true});
 
@@ -21,17 +21,7 @@ const Product = {
 const Products = mongoose.model("Products", Product);
 
 app.get("/", function(req,res){
-    Products.find({})
-        .then(prods => {
-            res.render("home", {
-                allProducts : prods
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).send("Error retrieving products from database");
-        });
-    // res.render("home");
+    res.render("home");
 })
 
 app.get("/about", function(req,res){
@@ -79,6 +69,18 @@ app.get("/products", function(req,res){
 
 app.get("/contact", function(req,res){
     res.render("contact");
+})
+
+app.get("/buyerlogin", function(req,res){
+    res.render("buyerlogin");
+})
+
+app.get("/sellerlogin", function(req,res){
+    res.render("sellerlogin");
+})
+
+app.get("/signup", function(req,res){
+    res.render("signup");
 })
 
 app.listen(3000, function(){
