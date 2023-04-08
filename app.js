@@ -2,6 +2,8 @@ const express = require('express');
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+var isLogin = false;
 
 const app = express();
 app.set('view engine','ejs');
@@ -9,16 +11,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("views"));
 
 mongoose.connect("mongodb+srv://ecommerce:e$1234@cluster0.wt6n0rb.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true});
-
-const Product = {
-    productName : String,
-    productDes : String,
-    productImage : Buffer,
-    price : Number,
-    stock : Number
-};
-
-const Products = mongoose.model("Products", Product);
 
 app.get("/", function(req,res){
     res.render("home");
@@ -40,7 +32,6 @@ app.post("/additem", function(req, res){
         price: req.body.pprice,
         stock: req.body.stock
     });
-
     p.save()
         .then(function(product) {
             console.log("Product added: ", product);
@@ -51,8 +42,6 @@ app.post("/additem", function(req, res){
             res.status(500).send("Error adding product");
         });
 });
-
-
 
 app.get("/products", function(req,res){
     Products.find({})
@@ -71,17 +60,75 @@ app.get("/contact", function(req,res){
     res.render("contact");
 })
 
-app.get("/buyerlogin", function(req,res){
-    res.render("buyerlogin");
-})
-
-app.get("/sellerlogin", function(req,res){
-    res.render("sellerlogin");
+app.get("/login", function(req,res){
+    if(isLogin) res.render("temp", {message: "Already Logged In"});
+    else res.render("login");
 })
 
 app.get("/signup", function(req,res){
-    res.render("signup");
+    if(isLogin) res.render("temp", {message: "Already Logged In"});
+    else res.render("signup");
 })
+
+app.get("/profile",function(req,res){
+    if(isLogin) res.render("profile", {loggedUser});
+    else res.render("temp", {message : "Login first"});
+})
+
+const userSchma = {
+    acctype : String,
+    name : String,
+    email : String, 
+    password : String,
+};
+const Users = mongoose.model("users", userSchma); 
+
+app.post("/signup", function(req,res){
+    const hash2 = bcrypt.hashSync(req.body.password, 10);
+    console.log(hash2);
+    const NewUser = new Users({
+        acctype : req.body.acctype,
+        name : req.body.name,
+        email : req.body.email,
+        password : hash2,
+    });
+    NewUser.save()
+        .then(()=> {
+            res.render("temp", {message: "Registered Successfully"});
+        })
+        .catch((err)=>{
+            res.render("temp", {message: "ERR Occured"});
+        })
+})
+
+var loggedUser = {
+    acctype : "",
+    name : "",
+    email : "",
+}
+
+app.post("/login", function(req, res) {
+    Users.findOne({ email: req.body.email, acctype: req.body.acctype })
+        .then(function(foundUser) {
+            const hash1 = bcrypt.hashSync(req.body.password, 10);
+            console.log(hash1);
+            if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+                isLogin = true;
+                loggedUser.acctype = foundUser.acctype;
+                loggedUser.name = foundUser.name;
+                loggedUser.email = foundUser.email;
+                console.log(loggedUser.name, loggedUser.email);
+                res.render("temp", { message: "Login Successfully" });
+            } 
+            else {
+                res.render("temp", { message: "Wrong ID and Password" });
+            }
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.render("temp", { message: "An error occurred while logging in" });
+    });
+});
 
 app.listen(3000, function(){
     console.log("Server stated at 3000");
