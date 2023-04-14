@@ -9,11 +9,71 @@
 <%- include('partials/header.ejs') -%>
 
 
-<div class="text-center">
+<!-- <div class="text-center">
     <h1> <%= loggedUser.acctype %> </h1>
     <h1> <%= loggedUser.name %> </h1>
     <h1> <%= loggedUser.email %> </h1>
-</div>
+</div> -->
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <style>
+    /* Style for the profile picture */
+    .profile-pic {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+    /* Style for the user info section */
+    .user-info {
+      margin-top: 30px;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    /* Style for the user name */
+    .user-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    /* Style for the user bio */
+    .user-bio {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    /* Style for the user social media icons */
+    .user-social-icons {
+      margin-top: 20px;
+    }
+    .user-social-icons i {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+  </style>
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-3 my-5">
+        <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-pic">
+      </div>
+      <div class="col-md-9">
+        <div class="user-info">
+          <div class="user-name"><%= loggedUser.name %></div>
+          <div class="user-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+          <div class="user-social-icons">
+            <i class="bi bi-facebook"></i>
+            <i class="bi bi-twitter"></i>
+            <i class="bi bi-instagram"></i>
+            <i class="bi bi-linkedin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.min.js"></script>
 
 
 <!-- Footer -->
