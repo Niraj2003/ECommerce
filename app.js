@@ -20,42 +20,6 @@ app.get("/about", function(req,res){
     res.render("about");
 })
 
-app.get("/additem", function(req,res){
-    res.render("additem");
-})
-
-app.post("/additem", function(req, res){
-    const p = new Products ({
-        productName: req.body.pname,
-        productDes: req.body.pdes,
-        productImage : req.body.pImage,
-        price: req.body.pprice,
-        stock: req.body.stock
-    });
-    p.save()
-        .then(function(product) {
-            console.log("Product added: ", product);
-            res.status(200).send("Product added successfully");
-        })
-        .catch(function(err) {
-            console.error(err);
-            res.status(500).send("Error adding product");
-        });
-});
-
-app.get("/products", function(req,res){
-    Products.find({})
-        .then(prods => {
-            res.render("products", {
-                allProducts : prods
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).send("Error retrieving products from database");
-        });
-})
-
 app.get("/contact", function(req,res){
     res.render("contact");
 })
@@ -107,28 +71,42 @@ var loggedUser = {
     email : "",
 }
 
-app.post("/login", function(req, res) {
-    Users.findOne({ email: req.body.email, acctype: req.body.acctype })
-        .then(function(foundUser) {
-            const hash1 = bcrypt.hashSync(req.body.password, 10);
-            console.log(hash1);
-            if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-                isLogin = true;
-                loggedUser.acctype = foundUser.acctype;
-                loggedUser.name = foundUser.name;
-                loggedUser.email = foundUser.email;
-                console.log(loggedUser.name, loggedUser.email);
-                res.render("temp", { message: "Login Successfully" });
-            } 
-            else {
-                res.render("temp", { message: "Wrong ID and Password" });
-            }
-        })
-        .catch(function(err) {
-            console.error(err);
-            res.render("temp", { message: "An error occurred while logging in" });
-    });
+app.post("/login", async function(req, res) {
+    try {
+        const foundUser = await Users.findOne({ email: req.body.email, acctype: req.body.acctype });
+
+        if (!foundUser) {
+            res.render("temp", { message: "User not found" });
+            return;
+        }
+
+        const isMatch = await bcrypt.compare(req.body.password, foundUser.password);
+
+        if (isMatch) {
+            isLogin = true;
+            loggedUser.acctype = foundUser.acctype;
+            loggedUser.name = foundUser.name;
+            loggedUser.email = foundUser.email;
+            console.log(loggedUser.name, loggedUser.email);
+            res.render("temp", { message: "Login Successfully" });
+        } 
+        else {
+            res.render("temp", { message: "Wrong ID and Password" });
+        }
+    } 
+    catch (err) {
+        console.error(err);
+        res.render("temp", { message: "An error occurred while logging in" });
+    }
 });
+
+app.get("/logout", function(req,res){
+    if(!isLogin) res.render("temp", {message: "Not Logged in"});
+    else{
+        isLogin = false;
+        res.render("temp", {message: "Logout Successfully"});
+    }
+})
 
 const menProd = {
     name : String,
@@ -187,6 +165,54 @@ app.get("/kidsproducts", function(req,res){
         res.status(500).send("Error retrieving products from database");
     });
 })
+
+app.get("/additem", function(req,res){
+    if(isLogin && loggedUser.acctype === "seller") res.render("additem");
+    else res.render("temp", {message: "Only seller can add items"});        
+})
+
+app.post("/additem", function(req, res){
+    if(req.body.sect === "kids"){
+        const k = new kidsProducts({
+            name : req.body.name,
+            price : req.body.price
+        });
+        k.save()
+        .then(()=> {
+            res.render("temp", {message: "Kid Product Added Successfully"});
+        })
+        .catch((err)=>{
+            res.render("temp", {message: "ERR Occured"});
+        })
+    }
+    if(req.body.sect === "men"){
+        const k = new menProducts({
+            name : req.body.name,
+            price : req.body.price
+        });
+        k.save()
+        .then(()=> {
+            res.render("temp", {message: "Men Product Added Successfully"});
+        })
+        .catch((err)=>{
+            res.render("temp", {message: "ERR Occured"});
+        })
+    }
+    if(req.body.sect === "women"){
+        const k = new womenProducts({
+            name : req.body.name,
+            price : req.body.price
+        });
+        k.save()
+        .then(()=> {
+            res.render("temp", {message: "Women Product Added Successfully"});
+        })
+        .catch((err)=>{
+            res.render("temp", {message: "ERR Occured"});
+        })
+    }
+});
+
 app.listen(3000, function(){
     console.log("Server stated at 3000");
 })
