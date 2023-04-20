@@ -9,12 +9,19 @@
     <div class="row">
       <% menProducts.forEach(function(product) { %>
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="card mb-4">
+          <div class="card mb-4 colgreen">
             <div class="card-body">
             <img src="https://via.placeholder.com/350x350.png?text=<%= product.name %>" class="card-img-top" alt="<%= product.name %>">
               <h5 class="card-title"> <%= product.name.toUpperCase(); %> </h5>
               <p class="card-text"> &#x20b9; <%= product.price %></p>
-              <a href="#" class="btn btn-primary">Add to Cart</a>
+              <div class="d-flex">
+                <div>
+                  <a href="#" class="btn btn-info">Add to Cart</a>
+                </div>
+                <div class="ml-auto">
+                  <a href="#" class="btn btn-primary">Buy Now</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
