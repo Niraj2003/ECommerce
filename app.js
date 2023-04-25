@@ -5,6 +5,11 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 var isLogin = false;
 
+const womenProducts = require("./models/women");
+const menProducts = require("./models/men");
+const kidsProducts = require("./models/kids");
+const Users = require("./models/user"); 
+
 const app = express();
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -38,14 +43,6 @@ app.get("/profile",function(req,res){
     if(isLogin) res.render("profile", {loggedUser});
     else res.render("temp", {message : "Login first"});
 })
-
-const userSchma = {
-    acctype : String,
-    name : String,
-    email : String, 
-    password : String,
-};
-const Users = mongoose.model("users", userSchma); 
 
 app.post("/signup", function(req,res){
     const hash2 = bcrypt.hashSync(req.body.password, 10);
@@ -108,12 +105,6 @@ app.get("/logout", function(req,res){
     }
 })
 
-const menProd = {
-    name : String,
-    price: Number
-};
-const menProducts = mongoose.model("menprod", menProd); 
-
 app.get("/menproducts", function(req,res){
     menProducts.find({})
     .then(prods => {
@@ -127,13 +118,6 @@ app.get("/menproducts", function(req,res){
     });
 })
 
-
-const womenProd = {
-    name : String,
-    price: Number
-};
-const womenProducts = mongoose.model("womenprod", womenProd); 
-
 app.get("/womenproducts", function(req,res){
     womenProducts.find({})
     .then(prods => {
@@ -146,12 +130,6 @@ app.get("/womenproducts", function(req,res){
         res.status(500).send("Error retrieving products from database");
     });
 })
-
-const kidsProd = {
-    name : String,
-    price: Number
-};
-const kidsProducts = mongoose.model("kidsprod", kidsProd); 
 
 app.get("/kidsproducts", function(req,res){
     kidsProducts.find({})
