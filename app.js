@@ -9,6 +9,7 @@ const womenProducts = require("./models/women");
 const menProducts = require("./models/men");
 const kidsProducts = require("./models/kids");
 const Users = require("./models/user"); 
+const cart = require("./models/cart");
 
 const app = express();
 app.set('view engine','ejs');
@@ -144,6 +145,25 @@ app.get("/kidsproducts", function(req,res){
     });
 })
 
+app.post("/kidsproducts", function(req,res){
+    if(!isLogin) res.render("temp", {message: "Login to view your cart"});        
+    else{
+        const k = new cart({
+            useremail : loggedUser.email,
+            name : req.body.name,
+            price : req.body.price,
+            quantity : req.body.quantity
+        });
+        k.save()
+        .then(()=> {
+            res.render("temp", {message: "Added in cart Successfully"});
+        })
+        .catch((err)=>{
+            res.render("temp", {message: "ERR Occured"});
+        })
+    }
+})
+
 app.get("/additem", function(req,res){
     if(isLogin && loggedUser.acctype === "seller") res.render("additem");
     else res.render("temp", {message: "Only seller can add items"});        
@@ -190,6 +210,23 @@ app.post("/additem", function(req, res){
         })
     }
 });
+
+app.get("/mycart", function(req,res){
+    if(!isLogin) res.render("temp", {message: "Login to view your cart"});
+    else{
+        cart.find({useremail : loggedUser.email})
+        .then(prods => {
+            res.render("mycart", {
+                cart : prods,
+                username : loggedUser.name
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send("Error database");
+        });
+    }
+})
 
 app.listen(3000, function(){
     console.log("Server stated at 3000");

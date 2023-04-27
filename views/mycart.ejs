@@ -4,23 +4,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <%- include('partials/header.ejs') -%>
-
+<h1>Welcome back <%= username %> </h1>
 <div class="container">
     <div class="row my-3">
-      <% kidsProducts.forEach(function(product) { %>
+      <% cart.forEach(function(product) { %>
         <div class="col-12 col-md-6 col-lg-4">
           <div class="card mb-4 colgreen">
             <div class="card-body">
             <img src="https://via.placeholder.com/350x350.png?text=<%= product.name %>" class="card-img-top" alt="<%= product.name %>">
               <h5 class="card-title"> <%= product.name.toUpperCase(); %> </h5>
               <p class="card-text"> &#x20b9; <%= product.price %></p>
-              <form action="/kidsProducts" method="POST">
-                <input type="hidden" name="name" value="<%= product.name %>">
-                <input type="hidden" name="price" value="<%= product.price %>">
-                <label for="<%= product.name %>">Quantity:</label>
-                <input type="number" id="<%= product.name %>" name="quantity" value="1" min="1" max="10">
-                <button type="submit" class="btn btn-info">Add to Cart</button>
-              </form>
+              <p class="card-text"> Quantity - <%= product.quantity %></p>
             </div>
           </div>
         </div>
