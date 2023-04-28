@@ -14,14 +14,13 @@
             <img src="https://via.placeholder.com/350x350.png?text=<%= product.name %>" class="card-img-top" alt="<%= product.name %>">
               <h5 class="card-title"> <%= product.name.toUpperCase(); %> </h5>
               <p class="card-text"> &#x20b9; <%= product.price %></p>
-              <div class="d-flex">
-                <div>
-                  <a href="#" class="btn btn-info">Add to Cart</a>
-                </div>
-                <div class="ml-auto">
-                  <a href="#" class="btn btn-primary">Buy Now</a>
-                </div>
-              </div>
+              <form action="/womenProducts" method="POST">
+                <input type="hidden" name="name" value="<%= product.name %>">
+                <input type="hidden" name="price" value="<%= product.price %>">
+                <label for="<%= product.name %>">Quantity:</label>
+                <input type="number" id="<%= product.name %>" name="quantity" value="1" min="1" max="10">
+                <button type="submit" class="btn btn-info">Add to Cart</button>
+              </form>
             </div>
           </div>
         </div>

@@ -19,7 +19,8 @@ app.use(express.static("views"));
 mongoose.connect("mongodb+srv://ecommerce:e$1234@cluster0.wt6n0rb.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true});
 
 app.get("/", function(req,res){
-    res.render("home");
+    if(isLogin) res.render("home", {a:isLogin, b:loggedUser});
+    else res.render("home",{a:isLogin});
 })
 
 app.get("/about", function(req,res){
@@ -86,7 +87,8 @@ app.post("/login", async function(req, res) {
             loggedUser.name = foundUser.name;
             loggedUser.email = foundUser.email;
             console.log(loggedUser.name, loggedUser.email);
-            res.render("temp", { message: "Login Successfully" });
+            // alert("Login attempt Successful");
+            res.render("home", {a:isLogin, b:loggedUser});
         } 
         else {
             res.render("temp", { message: "Wrong ID and Password" });
@@ -146,6 +148,44 @@ app.get("/kidsproducts", function(req,res){
 })
 
 app.post("/kidsproducts", function(req,res){
+    if(!isLogin) res.render("temp", {message: "Login to view your cart"});        
+    else{
+        const k = new cart({
+            useremail : loggedUser.email,
+            name : req.body.name,
+            price : req.body.price,
+            quantity : req.body.quantity
+        });
+        k.save()
+        .then(()=> {
+            res.render("temp", {message: "Added in cart Successfully"});
+        })
+        .catch((err)=>{
+            res.render("temp", {message: "ERR Occured"});
+        })
+    }
+})
+
+app.post("/menproducts", function(req,res){
+    if(!isLogin) res.render("temp", {message: "Login to view your cart"});        
+    else{
+        const k = new cart({
+            useremail : loggedUser.email,
+            name : req.body.name,
+            price : req.body.price,
+            quantity : req.body.quantity
+        });
+        k.save()
+        .then(()=> {
+            res.render("temp", {message: "Added in cart Successfully"});
+        })
+        .catch((err)=>{
+            res.render("temp", {message: "ERR Occured"});
+        })
+    }
+})
+
+app.post("/womenproducts", function(req,res){
     if(!isLogin) res.render("temp", {message: "Login to view your cart"});        
     else{
         const k = new cart({
