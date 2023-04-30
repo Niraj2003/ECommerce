@@ -1,26 +1,41 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="css/styles.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%- include('partials/header.ejs') -%>
-<h1>Welcome back <%= username %> </h1>
-<div class="container">
-    <div class="row my-3">
-      <% cart.forEach(function(product) { %>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card mb-4 colgreen">
-            <div class="card-body">
-            <img src="https://via.placeholder.com/350x350.png?text=<%= product.name %>" class="card-img-top" alt="<%= product.name %>">
-              <h5 class="card-title"> <%= product.name.toUpperCase(); %> </h5>
-              <p class="card-text"> &#x20b9; <%= product.price %></p>
-              <p class="card-text"> Quantity - <%= product.quantity %></p>
-            </div>
-          </div>
-        </div>
-      <% }); %>
-    </div>
-  </div>
 
-<%- include('partials/footer.ejs') -%>
-  
+
+<section class="py-5">
+  <h3 class="mx-5" >Welcome back <%= username %> </h3>
+  <div class="container px-4 px-lg-5 mt-5">
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <% cart.forEach(function(product) { %>
+          <div class="col mb-5">
+              <div class="card h-100">
+                  <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                  <div class="card-body p-4">
+                      <div class="text-center">
+                          <h5 class="fw-bolder"><%= product.name.toUpperCase(); %></h5>
+                          &#x20b9; <%= product.price %>
+                      </div>
+                  </div>
+                  <form class="text-center" action="/kidsProducts" method="POST">
+                    <input type="hidden" name="name" value="<%= product.name %>">
+                    <input type="hidden" name="price" value="<%= product.price %>">
+                    <label for="<%= product.name %>">Quantity:</label>
+                    <input type="number" id="<%= product.name %>" name="quantity" value="1" min="1" max="10">
+                    <br><br>
+                  </form>
+              </div>
+          </div>
+          <% }); %>
+        </div>
+  </div>
+</section>
+
+  <%- include('partials/footer.ejs') -%>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <script src="./js/scripts.js"></script>

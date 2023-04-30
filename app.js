@@ -19,7 +19,7 @@ app.use(express.static("views"));
 mongoose.connect("mongodb+srv://ecommerce:e$1234@cluster0.wt6n0rb.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true});
 
 app.get("/", function(req,res){
-    if(isLogin) res.render("home", {a:isLogin, b:loggedUser});
+    if(isLogin) res.render("home", {a:isLogin, b:loggedUser, c:false});
     else res.render("home",{a:isLogin});
 })
 
@@ -88,7 +88,7 @@ app.post("/login", async function(req, res) {
             loggedUser.email = foundUser.email;
             console.log(loggedUser.name, loggedUser.email);
             // alert("Login attempt Successful");
-            res.render("home", {a:isLogin, b:loggedUser});
+            res.render("home", {a:isLogin, b:loggedUser, c:true});
         } 
         else {
             res.render("temp", { message: "Wrong ID and Password" });
