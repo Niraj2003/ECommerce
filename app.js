@@ -110,7 +110,7 @@ app.get("/logout", function(req,res){
 })
 
 app.get("/menproducts", function(req,res){
-    menProducts.find({})
+    menProducts.find({}).maxTimeMS(30000)
     .then(prods => {
         res.render("menProducts", {
             menProducts : prods
@@ -123,7 +123,7 @@ app.get("/menproducts", function(req,res){
 })
 
 app.get("/womenproducts", function(req,res){
-    womenProducts.find({})
+    womenProducts.find({}).maxTimeMS(30000)
     .then(prods => {
         res.render("womenProducts", {
             womenProducts : prods
@@ -136,7 +136,7 @@ app.get("/womenproducts", function(req,res){
 })
 
 app.get("/kidsproducts", function(req,res){
-    kidsProducts.find({})
+    kidsProducts.find({}).maxTimeMS(30000)
     .then(prods => {
         res.render("kidsProducts", {
             kidsProducts : prods
@@ -214,7 +214,8 @@ app.post("/additem", function(req, res){
     if(req.body.sect === "kids"){
         const k = new kidsProducts({
             name : req.body.name,
-            price : req.body.price
+            price : req.body.price,
+            image : req.body.image
         });
         k.save()
         .then(()=> {
@@ -227,7 +228,8 @@ app.post("/additem", function(req, res){
     if(req.body.sect === "men"){
         const k = new menProducts({
             name : req.body.name,
-            price : req.body.price
+            price : req.body.price,
+            image : req.body.image
         });
         k.save()
         .then(()=> {
@@ -240,7 +242,8 @@ app.post("/additem", function(req, res){
     if(req.body.sect === "women"){
         const k = new womenProducts({
             name : req.body.name,
-            price : req.body.price
+            price : req.body.price,
+            image : req.body.image
         });
         k.save()
         .then(()=> {
