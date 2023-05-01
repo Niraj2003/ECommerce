@@ -13,6 +13,7 @@ const cart = require("./models/cart");
 
 const app = express();
 app.set('view engine','ejs');
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("views"));
 
@@ -267,6 +268,23 @@ app.get("/mycart", function(req,res){
         });
     }
 })
+app.get("/invoice", function (req, res) {
+  if (!isLogin) res.render("temp", { message: "Login to view your cart" });
+  else {
+    cart
+      .find({ useremail: loggedUser.email })
+      .then((prods) => {
+        res.render("invoice", {
+          cart: prods,
+          username: loggedUser.name,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send("Error database");
+      });
+  }
+});
 
 app.listen(3000, function(){
     console.log("Server stated at 3000");
