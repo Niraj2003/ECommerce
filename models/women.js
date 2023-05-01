@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const womenProd = {
     name : String,
-    price: Number
+    price: Number,
+    image :String
 };
 
 module.exports = mongoose.model("womenprod", womenProd); 

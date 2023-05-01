@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%- include('partials/header.ejs') -%>
 
-
+<body class = "d-flex flex-column vh-100">
 <section class="py-5">
-  <h3 class="mx-5" >Welcome back <%= username %> </h3>
+  <h3 class="mx-5" >View Your cart,<%= username %> </h3>
   <div class="container px-4 px-lg-5 mt-5">
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
         <% cart.forEach(function(product) { %>
           <div class="col mb-5">
               <div class="card h-100">
-                  <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                  <img class="card-img-top" src="<%product.image%>" alt="..." />
                   <div class="card-body p-4">
                       <div class="text-center">
                           <h5 class="fw-bolder"><%= product.name.toUpperCase(); %></h5>
@@ -32,7 +32,12 @@
           <% }); %>
         </div>
   </div>
+  <div class=" mx-5 justify-content-md-center">
+    <a class="btn btn-success" href="/invoice">Proceed to Checkout<a>
+  </div>
 </section>
+</body>
+
 
   <%- include('partials/footer.ejs') -%>
   <!-- Bootstrap core JS-->

@@ -1,0 +1,38 @@
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="css/styles.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%- include('partials/header.ejs') -%>
+
+<body class = "d-flex flex-column vh-100"></body>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <img class = "card-img-top" src="/gallary/logo.jpeg"
+                    alt="" class="card-img-top" />
+                <div class="card-body">
+                    <h5 class="card-title">Invoice</h5>
+                    <h6>Receipt No : <%=Math.floor((Math.random() * 100000) + 1)%></h6>
+                    <form action="/login" >
+                        <%let total = 0;%>
+                        <% cart.forEach(function(product) { %>
+                        <div><%= product.name.toUpperCase(); %>   <%= product.price %></div>
+                        <%total = total + product.price;%>
+                        <% }); %>
+                        <h5>Total : <%=`${total}`%></h5>
+                        <div class="btn btn-success">Place order</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<%- include('partials/footer.ejs') -%>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <script src="./js/scripts.js"></script>
