@@ -13,7 +13,7 @@
         <% cart.forEach(function(product) { %>
           <div class="col mb-5">
               <div class="card h-100">
-                  <img class="card-img-top" src="<%product.image%>" alt="..." />
+                  <img class="card-img-top" src="<%= product.image %>" alt="..." />
                   <div class="card-body p-4">
                       <div class="text-center">
                           <h5 class="fw-bolder"><%= product.name.toUpperCase(); %></h5>

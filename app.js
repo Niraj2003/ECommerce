@@ -155,7 +155,8 @@ app.post("/kidsproducts", function(req,res){
             useremail : loggedUser.email,
             name : req.body.name,
             price : req.body.price,
-            quantity : req.body.quantity
+            quantity : req.body.quantity,
+            image : req.body.image
         });
         k.save()
         .then(()=> {
@@ -174,7 +175,8 @@ app.post("/menproducts", function(req,res){
             useremail : loggedUser.email,
             name : req.body.name,
             price : req.body.price,
-            quantity : req.body.quantity
+            quantity : req.body.quantity,
+            image : req.body.image
         });
         k.save()
         .then(()=> {
@@ -193,7 +195,8 @@ app.post("/womenproducts", function(req,res){
             useremail : loggedUser.email,
             name : req.body.name,
             price : req.body.price,
-            quantity : req.body.quantity
+            quantity : req.body.quantity,
+            image : req.body.image
         });
         k.save()
         .then(()=> {
