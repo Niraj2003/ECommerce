@@ -2,37 +2,133 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
+<style>
+    h1 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+    table td, table th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+        vertical-align: middle;
+    }
+    table th {
+        background-color: #f5f5f5;
+        font-weight: 700;
+    }
+    .text-right {
+        text-align: right !important;
+    }
+    .invoice-total {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+    }
+    .invoice-total td {
+        padding: 10px;
+        text-align: right;
+    }
+    .invoice-total td:first-child {
+        font-weight: 700;
+    }
+    @media print {
+        body {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .container {
+            margin-bottom: 0;
+            box-shadow: none;
+        }
+    }
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%- include('partials/header.ejs') -%>
 
-<body class = "d-flex flex-column vh-100"></body>
-<div class="container d-flex justify-content-center align-items-center mt-5">
+<div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
-            <div class="card shadow">
-                <img class = "card-img-top" src="/gallary/logo.jpeg"
-                    alt="" class="card-img-top" />
-                <div class="card-body">
-                    <h5 class="card-title">Invoice</h5>
-                    <h6>Receipt No : <%=Math.floor((Math.random() * 100000) + 1)%></h6>
-                    <form action="/login" >
-                        <%let total = 0;%>
-                        <% cart.forEach(function(product) { %>
-                        <div><%= product.name.toUpperCase(); %>   <%= product.price %></div>
-                        <%total = total + product.price;%>
-                        <% }); %>
-                        <h5>Total : <%=`${total}`%></h5>
-                        <div class="btn btn-success">Place order</div>
-                    </form>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <h1>Invoice</h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <p><strong>Order Number:</strong> 123456</p>
+            <p><strong>Date:</strong> 
+            <% const today = new Date(); %>
+            <%= today.getDate() + '/' %> 
+            <%= today.getMonth() + 1; %>
+            <%= '/' + today.getFullYear() %>
+            </p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Bill To:</strong></p>
+            <p><%= user.name %></p>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%let total = 0;%>
+            <% cart.forEach(function(product) { %>
+            <tr>
+				<td><%= product.name.toUpperCase(); %> </td>
+				<td> <%= product.price %> </td>
+				<td> <%= product.quantity %> </td>
+                <% total += product.price * product.quantity %>
+				<td> <%= product.price * product.quantity %> </td>
+			</tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <div class="invoice-total">
+		<table>
+			<tbody>
+				<tr>
+					<td>Subtotal:</td>
+					<td>$<%=`${total}`%></td>
+				</tr>
+				<tr>
+					<td>Shipping:</td>
+					<td>$10.00</td>
+				</tr>
+				<tr>
+					<td>Tax/GST  :</td>
+					<td>$ <%= total*14 / 100 %> </td>
+                    <% total += total*14 / 100 %>
+				</tr>
+				<tr>
+					<td>Total:</td>
+					<td>$ <%= total %> </td>
+				</tr>
+			</tbody>
+		</table>
+    </div>
+    <button class="my-5 btn btn-success " onclick="printPage()">Download Receipt</button>
 </div>
-</body>
+<script>
+    function printPage() {
+        window.print();
+    }
+</script>
 
 <%- include('partials/footer.ejs') -%>
-  <!-- Bootstrap core JS-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Core theme JS-->
-  <script src="./js/scripts.js"></script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="./js/scripts.js"></script>

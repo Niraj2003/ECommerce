@@ -282,7 +282,7 @@ app.get("/invoice", function (req, res) {
       .then((prods) => {
         res.render("invoice", {
           cart: prods,
-          username: loggedUser.name,
+          user: loggedUser,
         });
       })
       .catch((err) => {
