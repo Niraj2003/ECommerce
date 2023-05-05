@@ -58,20 +58,18 @@
         <div class="col-md-6">
             <h1>Invoice</h1>
         </div>
-        <div class="col-md-6 text-right">
-            <p><strong>Order Number:</strong> 123456</p>
-            <p><strong>Date:</strong> 
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Bill To:</strong>
+            <%= user.name %>
+            <strong>Order Number:</strong> 123456
+            <strong>Date:</strong> 
             <% const today = new Date(); %>
             <%= today.getDate() + '/' %> 
             <%= today.getMonth() + 1; %>
             <%= '/' + today.getFullYear() %>
             </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <p><strong>Bill To:</strong></p>
-            <p><%= user.name %></p>
         </div>
     </div>
     <table>
