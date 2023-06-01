@@ -4,6 +4,7 @@ const Users = require("../models/user");
 const women = require("../models/women");
 const kids = require("../models/kids");
 const men = require("../models/men");
+const cart = require("../models/cart");
 
 const { requireLogin } = require("../middleware");
 const router = express.Router();
