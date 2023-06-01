@@ -7,6 +7,19 @@
 
 <div class="container mt-5">
     <h1>Login</h1>
+    <% if (message) { %>
+      <div id="loginSuccessMessage" class="alert alert-success">
+        <%= message %>
+      </div>
+      <script>
+        setTimeout(() => {
+          const loginSuccessMessage = document.querySelector('#loginSuccessMessage');
+          if (loginSuccessMessage) {
+            loginSuccessMessage.remove();
+          }
+        }, 3000); // Remove message after 3 seconds
+      </script>
+    <% } %>
     <div class="row">
       <div class="col-sm-8">
         <div class="card coll">

@@ -36,7 +36,11 @@
                     <li><a class="dropdown-item" href="/profile">My Profile</a></li>
                     <li><a class="dropdown-item" href="/login">Login </a></li>
                     <li><a class="dropdown-item" href="/signup">Sign In </a></li>
-                    <li><a class="dropdown-item" href="/logout">Logout </a></li>
+                    <li>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();" class="dropdown-item">Sign Out</a>
+                        <form id="logoutForm" action="/logout" method="post" style="display: none;"></form>
+                    </li>
+
                 </ul>
             </li>
             <a class="btn btn-outline-dark mx-3" href="/mycart">
