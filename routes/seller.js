@@ -5,6 +5,10 @@ const Users = require("../models/user");
 const router = express.Router();
 const { requireLogin } = require("../middleware");
 
+const kids = require("../models/kids");
+const men = require("../models/men");
+const women = require("../models/women");
+
 router.get("/additem", requireLogin, async function(req,res){
     const user = await Users.findById(req.session.user_id);
     if(user.acctype==='seller') return res.render('additem');
@@ -14,19 +18,19 @@ router.get("/additem", requireLogin, async function(req,res){
 router.post("/additem", function(req, res){
     if(req.body.sect === "kids"){
         const {name,price,image} = req.body;
-        const k = new kidsProducts({name, price, image});
+        const k = new kids({name, price, image});
         k.save()
         res.render('home',{message:"Item Added"});
     }
     if(req.body.sect === "men"){
         const {name,price,image} = req.body;
-        const k = new menProducts({name, price, image});
+        const k = new men({name, price, image});
         k.save()
         res.render('home',{message:"Item Added"});
     }
     if(req.body.sect === "women"){
         const {name,price,image} = req.body;
-        const k = new womenProducts({name, price, image});
+        const k = new women({name, price, image});
         k.save()
         res.render('home',{message:"Item Added"});
     }
